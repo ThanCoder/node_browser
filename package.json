@@ -1,7 +1,7 @@
 {
   "name": "webscrap_browser",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "api/index.js",
   "scripts": {
     "postinstall": "npx puppeteer browsers install chrome",
     "start": "node .",

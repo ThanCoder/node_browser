@@ -1,5 +1,6 @@
 const express = require("express");
-const puppeteer = require("puppeteer");
+const puppeteer = require('puppeteer-core');
+const chromium = require('@sparticuz/chromium');
 
 const app = express();
 
@@ -11,9 +12,9 @@ app.get("/", async (req, res) => {
       return;
     }
     const browser = await puppeteer.launch({
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable',
-      headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      executablePath: await chromium.executablePath(),
+      headless: true, // Vercel မှာ headless mode ကိုအသုံးပြုပါ
+      args: chromium.args
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'domcontentloaded' });

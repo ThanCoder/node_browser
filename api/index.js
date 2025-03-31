@@ -11,12 +11,9 @@ app.get("/", async (req, res) => {
       return;
     }
     const browser = await puppeteer.launch({
-      headless: "new",
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        // "--proxy-server=http://192.168.191.253:8080", // Proxy URL ထည့်မယ်
-      ],
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable',
+      headless: 'new',
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'domcontentloaded' });

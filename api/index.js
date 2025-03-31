@@ -1,12 +1,6 @@
 const express = require("express");
-// const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer");
 const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-
-// chrome.app ကို အသုံးမပြုအောင် filter ပြုလုပ်မယ်
-const stealth = StealthPlugin();
-stealth.enabledEvasions.delete('chrome.app');
-puppeteer.use(stealth);
 
 const app = express();
 

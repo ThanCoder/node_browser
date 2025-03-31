@@ -11,6 +11,7 @@ app.get("/", async (req, res) => {
       return;
     }
     const browser = await puppeteer.launch({
+      headless: "new",
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
@@ -18,7 +19,9 @@ app.get("/", async (req, res) => {
       ],
     });
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+    // await page.waitForFunction(() => document.readyState === "complete");
 
     // 📌 HTML content ကိုရယူ
     const content = await page.evaluate(

@@ -2,9 +2,9 @@ const express = require("express");
 const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium");
 
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+// const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
-puppeteer.use(StealthPlugin());
+// puppeteer.use(StealthPlugin());
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.get("/", async (req, res) => {
     }
     const browser = await puppeteer.launch({
       executablePath: await chromium.executablePath(),
-      headless: false, // Vercel မှာ headless mode ကိုအသုံးပြုပါ
+      headless: true, // Vercel မှာ headless mode ကိုအသုံးပြုပါ
       args: chromium.args,
     });
     const page = await browser.newPage();

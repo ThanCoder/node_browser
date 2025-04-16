@@ -3,9 +3,9 @@ const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium");
 const { headersArray } = require("puppeteer-core");
 
-// const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
-// puppeteer.use(StealthPlugin());
+puppeteer.use(StealthPlugin());
 
 const app = express();
 

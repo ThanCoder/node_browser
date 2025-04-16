@@ -1,6 +1,7 @@
 const express = require("express");
 const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium");
+const { headersArray } = require("puppeteer-core");
 
 // const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
@@ -12,13 +13,27 @@ app.get("/", async (req, res) => {
   try {
     const url = req.query.url;
     const delaySec = req.query.delaySec;
+    const hq = req.query.headless;
+
+    let headless = true;
+    if (hq) {
+      if(hq === 'true'){
+        headless = true;
+      }
+      if(hq === 'false'){
+        headless = false;
+      }
+    }
+
     if (!url) {
-      res.send("please provide `?delaySec=[1]`&&`url=[url]` delaySec-> optional");
+      res.send(
+        "please provide `?delaySec=[1]`&&headless=[true|false]`url=[url]` delaySec-> optional"
+      );
       return;
     }
     const browser = await puppeteer.launch({
       executablePath: await chromium.executablePath(),
-      headless: true, // Vercel မှာ headless mode ကိုအသုံးပြုပါ
+      headless: headless, // Vercel မှာ headless mode ကိုအသုံးပြုပါ
       args: chromium.args,
     });
     const page = await browser.newPage();
@@ -26,11 +41,10 @@ app.get("/", async (req, res) => {
 
     // await page.waitForFunction(() => document.readyState === "complete");
 
-    if(delaySec){
+    if (delaySec) {
       // ✅ 5 sec delay
-      await new Promise(resolve => setTimeout(resolve, 1000 * delaySec));
+      await new Promise((resolve) => setTimeout(resolve, 1000 * delaySec));
       console.log(delaySec);
-      
     }
 
     // 📌 HTML content ကိုရယူ
